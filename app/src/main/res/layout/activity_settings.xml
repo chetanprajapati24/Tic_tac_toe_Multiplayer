@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+    android:background="#F4F4F4"
+    tools:context=".tictactoegame.SettingsActivity">
+
+    <!-- Header Back Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:background="#F4F4F4">
+
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+        <ImageView
+            android:id="@+id/settings_back_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:src="@drawable/back_icon" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="8.5" />
+    </LinearLayout>
+
+    <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1.1" />
+
+    <!-- App Icon -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="2.2"
+        android:layout_gravity="center"
+        android:src="@drawable/splash_src" />
+
+    <!-- App Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1.05"
+        android:layout_gravity="center"
+        android:text="Tic Tac Toe"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="#505050"
+        android:fontFamily="@font/poppins_medium" />
+
+    <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="0.5" />
+
+    <!-- Vibration Switch -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.85"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:src="@drawable/ic_vibration" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.25" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Vibration"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_gravity="center" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="3.25" />
+        <Switch
+            android:id="@+id/vibration_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_gravity="center"
+            android:textOff="OFF"
+            android:textOn="ON"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.015"
+        android:background="#777777" />
+
+    <!-- Sound Switch -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.85"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:src="@drawable/ic_sound" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.25" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Sound"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_gravity="center" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="3.25" />
+        <Switch
+            android:id="@+id/sound_switch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:layout_gravity="center"
+            android:textOff="OFF"
+            android:textOn="ON"
+            tools:ignore="UseSwitchCompatOrMaterialXml" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.015"
+        android:background="#777777" />
+
+    <!-- Rate Us -->
+    <LinearLayout
+        android:id="@+id/rate_us_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.85"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="6dp"
+            android:src="@drawable/ic_rating" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.25" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Rating"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_gravity="center" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="5.25" />
+    </LinearLayout>
+
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.025"
+        android:background="#777777" />
+
+    <!-- Feedback -->
+    <LinearLayout
+        android:id="@+id/feedback_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.85"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp"
+            android:src="@drawable/feedback" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.25" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="Feedback"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_gravity="center" />
+        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="5.25" />
+    </LinearLayout>
+
+    <!-- Bottom Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_weight="0.015"
+        android:background="#777777" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.65" />
+</LinearLayout>

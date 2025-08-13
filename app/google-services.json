@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "383690285956",
+    "firebase_url": "https://tictactoem-95d28-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "tictactoem-95d28",
+    "storage_bucket": "tictactoem-95d28.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383690285956:android:ab75c0dcfe87b9704533d1",
+        "android_client_info": {
+          "package_name": "com.example.tic_tac_toe_m"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDK-glAUTdJ2wZ8fdK_QQntHqTCxj03vxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
