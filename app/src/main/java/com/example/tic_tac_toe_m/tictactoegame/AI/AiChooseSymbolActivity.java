@@ -1,4 +1,4 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.AI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -23,12 +23,12 @@ public class AiChooseSymbolActivity extends AppCompatActivity implements View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Full screen make
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
-        // Fullscreen setup
-     /*   requestWindowFeature(Window.FEATURE_NO_TITLE);
-        if (getSupportActionBar() != null) getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+
         setContentView(R.layout.activity_ai_choose_symbol);
 
         // Get player name
@@ -36,7 +36,6 @@ public class AiChooseSymbolActivity extends AppCompatActivity implements View.On
         if (playerName == null) playerName = "";
 
         // View bindings
-        backBtn = findViewById(R.id.ai_pick_side_back_btn);
         crossImg = findViewById(R.id.ai_pick_side_cross_img);
         circleImg = findViewById(R.id.ai_pick_side_circle_img);
         crossRadioImg = findViewById(R.id.ai_pick_side_cross_radio);
@@ -44,7 +43,7 @@ public class AiChooseSymbolActivity extends AppCompatActivity implements View.On
         continueBtn = findViewById(R.id.ai_pick_side_continue_btn);
 
         // Back button
-        backBtn.setOnClickListener(v -> onBackPressed());
+       // backBtn.setOnClickListener(v -> onBackPressed());
 
         // Cross selected
         crossRadioImg.setOnClickListener(v -> {
@@ -67,7 +66,7 @@ public class AiChooseSymbolActivity extends AppCompatActivity implements View.On
         // Continue button
         continueBtn.setOnTouchListener(this);
         continueBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AiGameActivity.class);
+            Intent intent = new Intent(this, AIDifficultyActivity.class);
             intent.putExtra("p1", playerName);
             intent.putExtra("ps", pickSide);
             startActivity(intent);

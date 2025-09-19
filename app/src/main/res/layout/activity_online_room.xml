@@ -8,41 +8,45 @@
     android:padding="24dp"
     android:background="@drawable/background_img">
 
+    <!-- Title -->
     <TextView
         android:id="@+id/tv_online_room_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Online Multiplayer"
+        android:text="Online Play With Friend"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         android:fontFamily="@font/poppins_medium"
         android:layout_marginBottom="40dp" />
 
+    <!-- Create Room Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_room"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_1"
+        android:gravity="center"
+        style="@style/OfflineMenuButton"
+        android:scaleY="1"
+        android:scaleX="1"
         android:fontFamily="@font/poppins_medium"
-        android:scaleX="0"
-        android:scaleY="0"
         android:text="Create Room"
+        android:layout_marginHorizontal="95dp"
+        android:layout_marginTop="20dp"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 
+    <!-- Join Room Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_join_room"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_1"
-        android:scaleX="0"
-        android:scaleY="0"
+        android:gravity="center"
+        style="@style/OfflineMenuButton"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:fontFamily="@font/poppins_medium"
         android:text="Join Room"
+        android:layout_marginHorizontal="95dp"
+        android:layout_marginTop="20dp"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp"

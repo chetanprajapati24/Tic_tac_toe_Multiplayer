@@ -8,26 +8,23 @@
 
     <EditText
         android:id="@+id/et_room_code"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="Enter Room Code"
-        android:padding="12dp"
-        android:textSize="18sp" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_join"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@drawable/button_1"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Join"
-        android:layout_marginTop="55dp"
-        android:layout_marginRight="95dp"
-        android:layout_marginLeft="95dp"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18dp"
-        android:textStyle="bold" />
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edittext_bg"
+        android:hint="Enter Room Code"
+        android:padding="12dp"
+        android:textColor="#5C5C5C"
+        android:textColorHint="#6E6E6E"
+        android:textSize="18sp" />
+
+
+    <!-- Buttons -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_join"
+        style="@style/OfflineMenuButton"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:layout_marginTop="38dp"
+        android:text="Join" />
 </LinearLayout>

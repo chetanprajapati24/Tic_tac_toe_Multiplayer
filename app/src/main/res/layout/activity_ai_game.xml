@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:background="#F6F6F6"
     android:layout_height="match_parent"
-    tools:context=".tictactoegame.AiGameActivity">
+    tools:context=".tictactoegame.AI.AiGameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,14 +18,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
-
-        <ImageView
-            android:id="@+id/offline_game_back_btn"
-            android:layout_width="0dp"
-            android:padding="4dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/back_icon" />
 
         <View
             android:layout_width="0dp"
@@ -409,8 +401,8 @@
             android:id="@+id/ai_game_seting_gifview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="7.5dp"
             android:layout_gravity="center"
+            android:padding="7.5dp"
             android:src="@drawable/settings_gif" />
     </androidx.cardview.widget.CardView>
 

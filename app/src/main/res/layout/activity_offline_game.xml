@@ -7,7 +7,7 @@
     android:weightSum="10"
     android:background="#F6F6F6"
     android:layout_height="match_parent"
-    tools:context=".tictactoegame.OfflineGameActivity">
+    tools:context=".tictactoegame.TwoPlayer.OfflineGameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,14 +21,6 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             tools:ignore="NestedWeights" />
-
-        <ImageView
-            android:id="@+id/offline_game_back_btn"
-            android:layout_width="0dp"
-            android:padding="4dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/back_icon" />
 
         <View
             android:layout_width="0dp"
@@ -75,7 +67,8 @@
                 android:textColor="#353535"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/poppins_medium" />
+                android:fontFamily="@font/poppins_medium"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
 
@@ -83,6 +76,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4" />
+        <TextView
+            android:id="@+id/textViewTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time left: 10s"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
+
 
 
         <LinearLayout
@@ -121,9 +124,10 @@
                 android:layout_weight="2.65"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
-                android:text="Jason B."
+                android:text="Player B"
                 android:textColor="#353535"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
 
 
         </LinearLayout>
@@ -190,7 +194,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
 
             <View
@@ -204,7 +209,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -236,7 +242,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -249,7 +256,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
 
             <View
@@ -263,7 +271,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -294,7 +303,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -307,7 +317,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
 
             <View
@@ -321,7 +332,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -394,7 +406,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2.65"
-                android:text="Jason B."
+                android:text="Player A"
                 android:textSize="14sp"
                 android:textColor="#353535"
                 android:layout_gravity="center"
@@ -404,11 +416,21 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/textViewTimer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time left: 10s"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4.5" />
+
 
         <LinearLayout
             android:layout_width="0dp"
@@ -430,7 +452,8 @@
                 android:gravity="center"
                 android:text="6"
                 android:textColor="#353535"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
 

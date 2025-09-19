@@ -1,5 +1,5 @@
 
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.AI;
 
     public class Minmax {
 
@@ -122,6 +122,8 @@ package com.example.tic_tac_toe_m.tictactoegame;
 
             return bestMove;
         }
+
+
     }
 
         /*

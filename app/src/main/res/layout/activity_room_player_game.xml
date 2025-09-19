@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".tictactoegame.OnlineWithRoom.RoomplayerGameActivity">
+
+<LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
     android:background="#F6F6F6"
-    android:layout_height="match_parent"
-    tools:context=".tictactoegame.MultiplayerGameActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.75"
-
         android:orientation="horizontal">
 
         <View
@@ -21,14 +25,17 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5"
             tools:ignore="NestedWeights" />
+        <TextView
+            android:id="@+id/next_round_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:text="Next round starts in 3s..." />
 
-        <ImageView
-            android:id="@+id/offline_game_back_btn"
-            android:layout_width="0dp"
-            android:padding="4dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/back_icon" />
+
 
         <View
             android:layout_width="0dp"
@@ -75,7 +82,8 @@
                 android:textColor="#353535"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:fontFamily="@font/poppins_medium" />
+                android:fontFamily="@font/poppins_medium"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
 
@@ -83,6 +91,17 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4" />
+        <TextView
+            android:id="@+id/textViewTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time left: 10s"
+            android:layout_marginRight="5dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
+
 
 
         <LinearLayout
@@ -121,9 +140,11 @@
                 android:layout_weight="2.65"
                 android:fontFamily="@font/poppins_medium"
                 android:gravity="center"
-                android:text="Jason B."
+                android:text="Player B"
                 android:textColor="#353535"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
+
 
 
         </LinearLayout>
@@ -139,7 +160,9 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.25" />
+        android:layout_weight="0.25"
+        />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,7 +213,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
 
             <View
@@ -204,7 +228,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -236,7 +261,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -249,7 +275,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
 
             <View
@@ -263,7 +290,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -294,7 +322,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -307,7 +336,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
 
             <View
@@ -321,7 +351,8 @@
                 android:layout_width="0dp"
                 android:layout_weight="3.1"
                 android:padding="15dp"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
 
             <View
                 android:layout_width="0dp"
@@ -394,7 +425,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2.65"
-                android:text="Jason B."
+                android:text="Player A"
                 android:textSize="14sp"
                 android:textColor="#353535"
                 android:layout_gravity="center"
@@ -405,10 +436,22 @@
         </LinearLayout>
 
 
+        <TextView
+            android:id="@+id/textViewTimer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="Time left: 10s"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_gravity="center"
+            tools:ignore="HardcodedText" />
+
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="4.5" />
+
 
         <LinearLayout
             android:layout_width="0dp"
@@ -430,7 +473,8 @@
                 android:gravity="center"
                 android:text="6"
                 android:textColor="#353535"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
 
 
@@ -450,35 +494,30 @@
         android:layout_weight="0.6" />
 
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view"
-        android:layout_width="50dp"
-        android:layout_height="0dp"
-        android:layout_weight="0.65"
-        android:layout_gravity="center"
-        android:elevation="4dp"
-        card_view:cardBackgroundColor="@color/white"
-        card_view:cardCornerRadius="40dp">
-
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/offline_game_seting_gifview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="7.5dp"
-            android:layout_gravity="center"
-            android:src="@drawable/settings_gif" />
-
-
-    </androidx.cardview.widget.CardView>
-
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.25" />
 
-
-
-
-
 </LinearLayout>
+    <LinearLayout
+        android:id="@+id/waiting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#AA000000"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/waiting_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Waiting for opponent to join..."
+            android:textSize="20sp"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_medium"/>
+    </LinearLayout>
+
+</FrameLayout>

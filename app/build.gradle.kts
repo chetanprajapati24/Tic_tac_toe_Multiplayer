@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -49,4 +50,6 @@ dependencies {
     implementation(libs.core)
     implementation(libs.circularimageview)
     implementation(libs.lottie)
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+
 }

@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="32dp"
+    android:background="@drawable/background_img"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose Difficulty"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_easy"
+        style="@style/OfflineMenuButton"
+        android:layout_marginTop="48dp"
+        android:scaleY="1"
+        android:scaleX="1"
+        android:text="Easy" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_medium"
+        style="@style/OfflineMenuButton"
+        android:layout_marginTop="48dp"
+        android:scaleY="1"
+        android:scaleX="1"
+        android:text="Medium" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_hard"
+        style="@style/OfflineMenuButton"
+        android:layout_marginTop="48dp"
+        android:scaleY="1"
+        android:scaleX="1"
+        android:text="Hard" />
+
+
+</LinearLayout>

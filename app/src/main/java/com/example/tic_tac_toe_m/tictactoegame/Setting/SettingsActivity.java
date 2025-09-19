@@ -1,4 +1,4 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.Setting;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
@@ -24,7 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch vibrationSwitch, soundSwitch;
     private LinearLayout rateUs, feedback;
-    private ImageView backBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class SettingsActivity extends AppCompatActivity {
         // Bind views
         vibrationSwitch = findViewById(R.id.vibration_switch);
         soundSwitch = findViewById(R.id.sound_switch);
-        backBtn = findViewById(R.id.settings_back_btn);
         rateUs = findViewById(R.id.rate_us_layout);
         feedback = findViewById(R.id.feedback_layout);
 
@@ -57,7 +55,7 @@ public class SettingsActivity extends AppCompatActivity {
         soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
                 MyServices.SOUND_CHECK = isChecked);
 
-        backBtn.setOnClickListener(v -> onBackPressed());
+      //  backBtn.setOnClickListener(v -> onBackPressed());
 
         rateUs.setOnClickListener(v -> askRatings());
 
@@ -83,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void composeEmail(String subject) {
         try {
             Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:chiragprajapati24.cp@gmail..com"));
+            intent.setData(Uri.parse("mailto:chiragprajapati24.cp@gmail.com"));
             intent.putExtra(Intent.EXTRA_SUBJECT, subject);
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(Intent.createChooser(intent, "Send feedback"));

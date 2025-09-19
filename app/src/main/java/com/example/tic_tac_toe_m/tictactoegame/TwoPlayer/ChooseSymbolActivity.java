@@ -1,4 +1,4 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.TwoPlayer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -26,12 +26,11 @@ public class ChooseSymbolActivity extends AppCompatActivity implements View.OnTo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Full screen setup
-       /* requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-*/
+        // Make status bar transparent
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         setContentView(R.layout.activity_choose_symbol);
 
         // Receive player names
@@ -39,7 +38,7 @@ public class ChooseSymbolActivity extends AppCompatActivity implements View.OnTo
         playerTwo = getIntent().getStringExtra("p2");
 
         // Find views
-        backBtn = findViewById(R.id.pick_side_back_btn);
+      //  backBtn = findViewById(R.id.pick_side_back_btn);
         crossImg = findViewById(R.id.pick_side_cross_img);
         circleImg = findViewById(R.id.pick_side_circle_img);
         crossRadioImg = findViewById(R.id.pick_side_cross_radio);
@@ -47,7 +46,7 @@ public class ChooseSymbolActivity extends AppCompatActivity implements View.OnTo
         continueBtn = findViewById(R.id.pick_side_continue_btn);
 
         // Back Button
-        backBtn.setOnClickListener(v -> onBackPressed());
+     //   backBtn.setOnClickListener(v -> onBackPressed());
 
         // Cross selected
         crossRadioImg.setOnClickListener(v -> selectCross());
@@ -62,10 +61,10 @@ public class ChooseSymbolActivity extends AppCompatActivity implements View.OnTo
         continueBtn.setOnTouchListener(this);
         continueBtn.setOnClickListener(v -> {
             if (pickSide == -1) {
-                Toast.makeText(this, "Please select a symbol!", Toast.LENGTH_SHORT).show();
-                return;
+                pickSide=0;
+                selectCross();
+                Toast.makeText(this, " X symbol selected X chosen!", Toast.LENGTH_SHORT).show();
             }
-
 
             Intent intent = new Intent(ChooseSymbolActivity.this, OfflineGameActivity.class);
             intent.putExtra("p1", playerOne);

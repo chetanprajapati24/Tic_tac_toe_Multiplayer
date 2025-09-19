@@ -1,5 +1,5 @@
 [versions]
-agp = "8.11.0"
+agp = "8.12.0"
 androidGifDrawable = "1.2.29"
 circularimageview = "4.3.1"
 core = "1.8.0"
@@ -24,6 +24,7 @@ playServicesBase = "latest_version"
 circularimageview = { module = "com.mikhaellopez:circularimageview", version.ref = "circularimageview" }
 android-gif-drawable = { module = "pl.droidsonroids.gif:android-gif-drawable", version.ref = "androidGifDrawable" }
 core = { module = "com.google.android.play:core", version.ref = "core" }
+firebase-auth = { module = "com.google.firebase:firebase-auth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

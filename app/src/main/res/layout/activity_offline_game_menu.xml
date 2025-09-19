@@ -2,12 +2,23 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#FAFAFA"
     tools:context=".tictactoegame.OfflineGameMenuActivity">
 
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/img_logo_offline_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        android:src="@drawable/bgxo"
+        tools:visibility="gone" />
+
+    <!-- Main Menu -->
     <LinearLayout
         android:id="@+id/container_offline_menu"
         android:layout_width="match_parent"
@@ -18,11 +29,13 @@
         android:paddingTop="68dp"
         tools:ignore="HardcodedText">
 
+        <!-- Title -->
+
+        <!-- Buttons -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="100dp"
             android:alpha="0"
             android:fontFamily="@font/poppins_medium"
             android:text="Choose your play mode"
@@ -30,57 +43,42 @@
             android:textColor="#101010"
             android:textSize="20sp"
             android:textStyle="bold"
-
             tools:alpha="1" />
-
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choice1_offline_menu"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
+            style="@style/OfflineMenuButton"
             android:layout_marginTop="48dp"
-            android:background="@drawable/button_1"
-            android:fontFamily="@font/poppins_medium"
-            android:scaleX="0"
-            android:scaleY="0"
-            android:text="With AI"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:scaleY="1"
+            android:scaleX="1"
+            android:text="With AI" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choice2_offline_menu"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
+            style="@style/OfflineMenuButton"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_1"
-            android:fontFamily="@font/poppins_medium"
-            android:scaleX="0"
-            android:scaleY="0"
-            android:text="2-Player"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:scaleY="1"
+            android:scaleX="1"
+            android:text="2-Player" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choice3_online_menu"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
+            style="@style/OfflineMenuButton"
             android:layout_marginTop="20dp"
-            android:background="@drawable/button_1"
-            android:fontFamily="@font/poppins_medium"
-            android:scaleX="0"
-            android:scaleY="0"
-            android:text="Online With a friend"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:scaleY="1"
+            android:scaleX="1"
+            android:text="Online With a friend" />
 
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_choice4_online_menu"
+            style="@style/OfflineMenuButton"
+            android:layout_marginTop="20dp"
+            android:scaleY="1"
+            android:scaleX="1"
+            android:text="Multiplayer" />
 
-        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        <!-- Settings Button -->
+        <androidx.cardview.widget.CardView
             android:id="@+id/card_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -95,24 +93,9 @@
                 android:id="@+id/seting_gifview_offline_menu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="7.5dp"
+                android:padding="5.5dp"
                 android:src="@drawable/settings_gif" />
-
-
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/img_logo_offline_menu"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:paddingBottom="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:src="@drawable/splash_src"
-        tools:visibility="gone"
-        />
 </FrameLayout>

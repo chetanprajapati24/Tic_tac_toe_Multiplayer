@@ -1,4 +1,4 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.OnlineWithRoom;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +23,13 @@ public class OnlineRoomActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Make status bar transparent
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
+
         setContentView(R.layout.activity_online_room);
 
         createRoomBtn = findViewById(R.id.btn_create_room);
@@ -33,16 +40,19 @@ public class OnlineRoomActivity extends AppCompatActivity {
 
         // Button click handlers
         createRoomBtn.setOnClickListener(v -> {
+            String playerName = getIntent().getStringExtra("Player_Name");
             Intent intent = new Intent(OnlineRoomActivity.this, CreateRoomActivity.class);
+            intent.putExtra("Player_Name", playerName);
             startActivity(intent);
         });
 
         joinRoomBtn.setOnClickListener(v -> {
+            String playerName = getIntent().getStringExtra("Player_Name");
             Intent intent = new Intent(OnlineRoomActivity.this, JoinRoomActivity.class);
+            intent.putExtra("Player_Name", playerName);
             startActivity(intent);
         });
     }
-
     private void animateButtons() {
         View[] views = {createRoomBtn, joinRoomBtn};
 

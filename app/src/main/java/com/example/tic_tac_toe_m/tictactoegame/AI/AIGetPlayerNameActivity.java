@@ -1,4 +1,4 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.AI;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tic_tac_toe_m.R;
@@ -20,26 +21,25 @@ public class AIGetPlayerNameActivity  extends AppCompatActivity implements View.
     private String playerName;
     private EditText playerNameTxt;
     private Button playerButton;
-    private ImageView BackBtn;
+   // private ImageView BackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Make status bar transparent
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
-      //  getSupportActionBar().hide();
-        //requestWindowFeature(Window.FEATURE_NO_TITLE); //will hide the title
-        //this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-          //      WindowManager.LayoutParams.FLAG_FULLSCREEN); //enable full screen
-
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         setContentView(R.layout.activity_aiget_player_name);
-       /* ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.hide();
-        }*/
+        }
 
 
 
-        BackBtn = (ImageView) findViewById(R.id.ai_player_names_back_btn);
+      //  BackBtn = (ImageView) findViewById(R.id.ai_player_names_back_btn);
         playerNameTxt = (EditText) findViewById(R.id.ai_player_name_edttxt);
         playerButton = (Button) findViewById(R.id.ai_player_name_btn);
 
@@ -60,13 +60,13 @@ public class AIGetPlayerNameActivity  extends AppCompatActivity implements View.
             }
         });
 
-        BackBtn.setOnClickListener(new View.OnClickListener() {
+      /*  BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 onBackPressed();
             }
-        });
+        });*/
 
     }
 

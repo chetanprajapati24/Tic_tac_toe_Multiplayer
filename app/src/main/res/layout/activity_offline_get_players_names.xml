@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="10"
     android:background="@drawable/background_img"
-    tools:context=".tictactoegame.OfflineGetPlayersNamesActivity">
+    android:weightSum="10"
+    tools:context=".tictactoegame.TwoPlayer.OfflineGetPlayersNamesActivity">
 
-
+    <!-- Top Bar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,59 +20,46 @@
             android:layout_height="match_parent"
             android:layout_weight="0.5" />
 
-        <ImageView
-            android:id="@+id/player_names_back_btn"
-            android:layout_width="0dp"
-            android:padding="2dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/back_icon"
-            tools:ignore="ContentDescription" />
-
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="8.5" />
     </LinearLayout>
 
+    <!-- Spacer -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.5" />
 
-
+    <!-- Player One Layout -->
     <LinearLayout
         android:id="@+id/player_one_layout"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:weightSum="10"
+        android:layout_weight="5.5"
         android:orientation="vertical"
-        android:layout_weight="5.5">
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:weightSum="10">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            tools:ignore="NestedWeights" />
+            android:layout_weight="2" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
             android:layout_marginStart="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/player_one"
             android:textSize="20sp"
-            android:textAllCaps="false"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="bold"
             android:textColor="#5C5C5C"
-
-            android:text="@string/player_one" />
+            android:textStyle="bold"
+            android:fontFamily="@font/poppins_regular"
+            android:textAllCaps="false" />
 
         <View
             android:layout_width="match_parent"
@@ -84,20 +70,18 @@
             android:id="@+id/player_one_name_edttxt"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:autofillHints=""
-            android:singleLine="true"
-            android:layout_marginLeft="40dp"
+            android:layout_weight="1.5"
+            android:layout_marginHorizontal="40dp"
             android:hint="Nick Name"
+            android:singleLine="true"
+            android:maxLength="10"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:cursorVisible="true"
             android:textColor="#5C5C5C"
-            android:backgroundTint="#373737"
             android:textColorHint="#6E6E6E"
-            android:maxLength="10"
-            android:maxLines="1"
-            android:textSize="18sp"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1.5" />
-
+            android:background="@drawable/edittext_bg"
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
@@ -107,64 +91,53 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/player_one_btn"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_gravity="center"
+            android:layout_marginHorizontal="95dp"
             android:gravity="center"
-            android:background="@drawable/button_1"
-            android:fontFamily="@font/poppins_medium"
+           style="@style/OfflineMenuButton"
+            android:scaleX="1"
+            android:scaleY="1"
             android:text="Next"
-            android:layout_marginRight="95dp"
-            android:layout_marginLeft="95dp"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_medium"
+            android:textAllCaps="false" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <!-- Player Two Layout (Initially Hidden) -->
+    <LinearLayout
+        android:id="@+id/player_two_layout"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5.5"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp"
+        android:weightSum="10">
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2" />
 
-
-    </LinearLayout>
-
-
-
-
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/player_two_layout"
-        android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_height="0dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:weightSum="10"
-        android:orientation="vertical"
-        android:layout_weight="5.5">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            tools:ignore="NestedWeights" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:textColor="#4C4C4C"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_vertical"
             android:layout_marginStart="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/player_two"
             android:textSize="20sp"
-            android:textAllCaps="false"
-            android:fontFamily="@font/poppins_regular"
+            android:textColor="#4C4C4C"
             android:textStyle="bold"
-            android:text="@string/player_two" />
+            android:fontFamily="@font/poppins_regular"
+            android:textAllCaps="false" />
 
         <View
             android:layout_width="match_parent"
@@ -172,21 +145,21 @@
             android:layout_weight="0.5" />
 
         <EditText
-            android:singleLine="true"
-            android:maxLength="10"
-            android:textColor="#4C4C4C"
-            android:maxLines="1"
-            android:backgroundTint="#4C4C4C"
             android:id="@+id/player_two_name_edttxt"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="40dp"
-            android:hint="@string/nick_name"
-            android:textColorHint="#4C4C4C"
-            android:textSize="18sp"
-            android:layout_marginRight="40dp"
-            android:layout_weight="1.5" />
-
+            android:layout_weight="1.5"
+            android:layout_marginHorizontal="40dp"
+            android:hint="Nick Name"
+            android:singleLine="true"
+            android:maxLength="10"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:cursorVisible="true"
+            android:textColor="#5C5C5C"
+            android:textColorHint="#6E6E6E"
+            android:background="@drawable/edittext_bg"
+            android:textSize="18sp" />
 
         <View
             android:layout_width="match_parent"
@@ -196,39 +169,26 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/player_two_btn"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.5"
-            android:layout_gravity="center"
+            android:layout_marginHorizontal="95dp"
             android:gravity="center"
-            android:background="@drawable/button_1"
-            android:fontFamily="@font/poppins_medium"
+            style="@style/OfflineMenuButton"
+            android:scaleX="1"
+            android:scaleY="1"
             android:text="Next"
-            android:layout_marginRight="95dp"
-            android:layout_marginLeft="95dp"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
-
-
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppins_medium"
+            android:textAllCaps="false" />
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2" />
-
-
     </LinearLayout>
 
+    <!-- Spacer -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2" />
-
-
-
-
-
-
-
-
 </LinearLayout>

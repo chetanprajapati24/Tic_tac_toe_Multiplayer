@@ -1,7 +1,6 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.AI;
 
-import static com.example.tic_tac_toe_m.tictactoegame.Minmax.findBestMove;
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,29 +24,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.tic_tac_toe_m.R;
+import com.example.tic_tac_toe_m.tictactoegame.Setting.MyServices;
+import com.example.tic_tac_toe_m.tictactoegame.OfflineGameMenuActivity;
+import com.example.tic_tac_toe_m.tictactoegame.Setting.SettingsActivity;
 import com.mikhaellopez.circularimageview.CircularImageView;
+
+import java.util.Objects;
 
 import pl.droidsonroids.gif.GifImageView;
 
 public class AiGameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    //  AI won't play after game ends
-    //  Delayed AI move for better UX
-    //  Sound/Vibration added for AI moves
-    //  Safe tag parsing and click handling
-    //  Redundant Toast removed
-    //  Restart fixed for AI to move correctly on next round
-
-    // Initialize the boxes
-    private ImageView Box_1, Box_2, Box_3, Box_4, Box_5, Box_6, Box_7, Box_8, Box_9, backBtn;
+    private ImageView Box_1;
+    private ImageView Box_2;
+    private ImageView Box_3;
+    private ImageView Box_4;
+    private ImageView Box_5;
+    private ImageView Box_6;
+    private ImageView Box_7;
+    private ImageView Box_8;
+    private ImageView Box_9;
 
     private GifImageView settingsGifView;
     private ImageView[] Boxes;
-    private CircularImageView playerOneImg;
+
+    private String difficultyLevel; // "Easy", "Medium", "Hard"
 
     Vibrator vibrator;
     private TextView playerOneWins, playerTwoWins;
-    private TextView playerOneName;
 
     Dialog dialog, drawdialog, robotdialog, quitdialog;
 
@@ -54,7 +59,6 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
     int playerTwoWinCount = 0;
 
     int PICK_SIDE;
-    private String playerOne;
 
     // Initialize the player X and O with 0 and 1 respectively
     int Player_X = 0;
@@ -72,12 +76,11 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+// Make status bar transparent
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
-     /*   requestWindowFeature(Window.FEATURE_NO_TITLE); // will hide the title
-        getSupportActionBar().hide(); // hide the title bar
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN); // enable full screen
-*/
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         setContentView(R.layout.activity_ai_game);
 
         dialog = new Dialog(this);
@@ -100,11 +103,10 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
 
         Boxes = new ImageView[]{Box_1, Box_2, Box_3, Box_4, Box_5, Box_6, Box_7, Box_8, Box_9};
 
-        backBtn = findViewById(R.id.offline_game_back_btn);
         settingsGifView = findViewById(R.id.ai_game_seting_gifview);
 
-        playerOneImg = findViewById(R.id.player_one_img);
-        playerOneName = findViewById(R.id.player_one_name_txt);
+        CircularImageView playerOneImg = findViewById(R.id.player_one_img);
+        TextView playerOneName = findViewById(R.id.player_one_name_txt);
         playerOneWins = findViewById(R.id.player_one_win_count_txt);
         playerTwoWins = findViewById(R.id.player_two_won_txt);
 
@@ -116,7 +118,11 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
         playerOneWins.setText(String.valueOf(playerOneWinCount));
         playerTwoWins.setText(String.valueOf(playerTwoWinCount));
 
-        playerOne = getIntent().getStringExtra("p1");
+        difficultyLevel = getIntent().getStringExtra("level"); // passed from previous activity
+        if (difficultyLevel == null) difficultyLevel = "Hard"; // fallback
+
+
+        String playerOne = getIntent().getStringExtra("p1");
         PICK_SIDE = getIntent().getIntExtra("ps", 0);
         playerOneName.setText(playerOne);
 
@@ -147,98 +153,74 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
             ActivePlayer = 1;
         }
 
-        settingsGifView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Drawable drawable = settingsGifView.getDrawable();
-                if (drawable instanceof Animatable) {
-                    ((Animatable) drawable).start();
-                }
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Drawable drawable = settingsGifView.getDrawable();
-                        if (drawable instanceof Animatable) {
-                            ((Animatable) drawable).stop();
-                        }
-                        Intent intent = new Intent(AiGameActivity.this, SettingsActivity.class);
-                        startActivity(intent);
-                    }
-                }, 750);
+        settingsGifView.setOnClickListener(v -> {
+            Drawable drawable1 = settingsGifView.getDrawable();
+            if (drawable1 instanceof Animatable) {
+                ((Animatable) drawable1).start();
             }
+            Handler handler = new Handler();
+            handler.postDelayed(() -> {
+                Drawable drawable2 = settingsGifView.getDrawable();
+                if (drawable2 instanceof Animatable) {
+                    ((Animatable) drawable2).stop();
+                }
+                Intent intent = new Intent(AiGameActivity.this, SettingsActivity.class);
+                startActivity(intent);
+            }, 750);
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quitDialogfun();
-            }
-        });
     }
 
     @Override
     public void onClick(View view) {
-        // if isGameActive is false when the user click on button nothing can do and program exit from function
         if (!isGameActive) return;
 
-        ImageView clickImg = (ImageView) findViewById(view.getId());
-        // get the tag of button which user click
+        ImageView clickImg = findViewById(view.getId());
         int gettingTag = Integer.parseInt(view.getTag().toString());
 
-        // check the Active player and checked whether it already with X or O
         if (ActivePlayer == Player_X && filledPos[gettingTag - 1] == -1 && PICK_SIDE == Player_X) {
             if (MyServices.SOUND_CHECK) {
                 final MediaPlayer mp = MediaPlayer.create(this, R.raw.x);
                 mp.start();
             }
 
-            if (MyServices.VIBRATION_CHECK) {
-                if (Build.VERSION.SDK_INT >= 26) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(200);
-                }
-            }
+            // Vibrate when Player X moves
+            MyServices.vibrate(this, 500);
 
-            clickImg.setImageResource(R.drawable.cross);
+            clickImg.setImageResource(R.drawable.xbg);
             storeActivePlayer = ActivePlayer;
             ActivePlayer = Player_0;
             int value = gettingTag - 1;
             filledPos[value] = Player_X;
 
-            // check the win condition
             checkForWin();
             if (isGameActive) checkdraw();
-            if (isGameActive) AI(); // Call AI after player move
-        } else if (ActivePlayer == Player_0 && filledPos[gettingTag - 1] == -1 && PICK_SIDE == Player_0) {
+            if (isGameActive) AI();
+        }
+
+        else if (ActivePlayer == Player_0 && filledPos[gettingTag - 1] == -1 && PICK_SIDE == Player_0) {
             if (MyServices.SOUND_CHECK) {
                 final MediaPlayer mp = MediaPlayer.create(this, R.raw.o);
                 mp.start();
             }
 
-            if (MyServices.VIBRATION_CHECK) {
-                if (Build.VERSION.SDK_INT >= 26) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(200);
-                }
-            }
+            //  Vibrate when Player O moves
+            MyServices.vibrate(this, 500);
 
-            clickImg.setImageResource(R.drawable.circle);
+            clickImg.setImageResource(R.drawable.obg);
             storeActivePlayer = ActivePlayer;
             ActivePlayer = Player_X;
             int value = gettingTag - 1;
             filledPos[value] = Player_0;
 
-            // check the win condition
             checkForWin();
             if (isGameActive) checkdraw();
-            if (isGameActive) AI(); // Call AI after player move
+            if (isGameActive) AI();
         }
     }
 
-    private void AI() {
+
+   /* private void AI() {
         if (!isGameActive) return; // Fix: Prevent AI move if game already over
 
         char board[][] = {{' ', ' ', ' '},
@@ -274,12 +256,74 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             if (PICK_SIDE == 0) { // user = X, AI = O
-                Boxes[index].setImageResource(R.drawable.circle);
+                Boxes[index].setImageResource(R.drawable.obg);
                 filledPos[index] = Player_0;
                 ActivePlayer = Player_X;
                 storeActivePlayer = Player_0;
             } else {
-                Boxes[index].setImageResource(R.drawable.cross);
+                Boxes[index].setImageResource(R.drawable.xbg);
+                filledPos[index] = Player_X;
+                ActivePlayer = Player_0;
+                storeActivePlayer = Player_X;
+            }
+
+            checkForWin();
+            if (isGameActive) checkdraw();
+        }, 500); // 0.5s delay for realism
+    }*/
+
+    private void AI() {
+        if (!isGameActive) return; // Prevent AI move if game over
+
+        new Handler().postDelayed(() -> {
+            if (!isGameActive) return;
+
+            int index = -1;
+
+            // Choose move based on difficulty level
+            switch (difficultyLevel) {
+                case "Easy":
+                    index = getRandomMove();
+                    break;
+
+                case "Medium":
+                    // 50% chance of best move, 50% random
+                    if (Math.random() < 0.5) {
+                        index = getRandomMove();
+                    } else {
+                        index = getBestMove();
+                    }
+                    break;
+
+                case "Hard":
+                default:
+                    index = getBestMove();
+                    break;
+            }
+            Log.d("AI_DEBUG", "Difficulty: " + difficultyLevel);
+
+            if (index == -1 || filledPos[index] != -1) return; // invalid or occupied
+
+            // Play sound/vibration
+            if (MyServices.SOUND_CHECK) {
+                final MediaPlayer mp = MediaPlayer.create(this, PICK_SIDE == 0 ? R.raw.o : R.raw.x);
+                mp.start();
+            }
+            if (MyServices.VIBRATION_CHECK) {
+                if (Build.VERSION.SDK_INT >= 26)
+                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                else
+                    vibrator.vibrate(200);
+            }
+
+            // Set AI move
+            if (PICK_SIDE == 0) { // user is X, AI is O
+                Boxes[index].setImageResource(R.drawable.obg);
+                filledPos[index] = Player_0;
+                ActivePlayer = Player_X;
+                storeActivePlayer = Player_0;
+            } else {
+                Boxes[index].setImageResource(R.drawable.xbg);
                 filledPos[index] = Player_X;
                 ActivePlayer = Player_0;
                 storeActivePlayer = Player_X;
@@ -290,50 +334,148 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
         }, 500); // 0.5s delay for realism
     }
 
+    private int getRandomMove() {
+        java.util.List<Integer> available = new java.util.ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            if (filledPos[i] == -1) {
+                available.add(i);
+            }
+        }
+        if (available.isEmpty()) return -1;
+        return available.get((int) (Math.random() * available.size()));
+    }
+
+    private int getBestMove() {
+        char[][] board = new char[3][3];
+           /*
+    * char[][] board = {
+    {'x', 'o', 'x'},
+    {'_', 'o', '_'},
+    {'_', '_', '_'}
+};
+*/
+
+        // Convert filledPos[] to 2D char array board[][]
+        for (int i = 0; i < 9; i++) {
+            int row = i / 3;
+            int col = i % 3;
+            if (filledPos[i] == -1) board[row][col] = '_';
+            else if (filledPos[i] == Player_X) board[row][col] = 'x';
+            else board[row][col] = 'o';
+        }
+
+        // Set AI and opponent symbols based on PICK_SIDE
+        // PICK_SIDE == 0 → Player chose X → AI is O
+        // PICK_SIDE == 1 → Player chose O → AI is X
+        if (PICK_SIDE == 0) {
+            Minmax.player = 'o';
+            Minmax.opponent = 'x';
+        } else {
+            Minmax.player = 'x';
+            Minmax.opponent = 'o';
+        }
+
+        // Get best move from Minimax
+        Minmax.Move bestMove = Minmax.findBestMove(board);
+
+        // Convert (row, col) back to 1D index
+        if (bestMove == null || bestMove.row == -1
+                             || bestMove.col == -1) return -1;
+        return bestMove.row * 3 + bestMove.col;
+    }
+
+
+
     private void checkForWin() {
-        // Store all the Winning conditions in 2D array
-        int[][] winningPos = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {1, 4, 7}, {2, 5, 8}, {3, 6, 9}, {1, 5, 9}, {3, 5, 7}};
+        int[][] winningPos = {
+                {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
+                {1, 4, 7}, {2, 5, 8}, {3, 6, 9},
+                {1, 5, 9}, {3, 5, 7}
+        };
 
-        for (int i = 0; i < 8; i++) {
-            int val0 = winningPos[i][0];
-            int val1 = winningPos[i][1];
-            int val2 = winningPos[i][2];
+        for (int[] pos : winningPos) {
+            int val0 = pos[0], val1 = pos[1], val2 = pos[2];
 
-            if (filledPos[val0 - 1] == filledPos[val1 - 1] && filledPos[val1 - 1] == filledPos[val2 - 1]) {
-                if (filledPos[val0 - 1] != -1) {
-                    // winner declare
-                    if (storeActivePlayer == Player_X) {
-                        if (PICK_SIDE == 0) {
-                            playerOneWinCount++;
-                            playerOneWins.setText(String.valueOf(playerOneWinCount));
-                        }
-                        if (PICK_SIDE == 1) {
-                            playerTwoWinCount++;
-                            playerTwoWins.setText(String.valueOf(playerTwoWinCount));
-                        }
+            if (filledPos[val0 - 1] != -1 &&
+                    filledPos[val0 - 1] == filledPos[val1 - 1] &&
+                    filledPos[val1 - 1] == filledPos[val2 - 1])
+            {
 
-                        // Highlight winning boxes
-                        highlightWinningBoxes(val0, val1, val2, R.drawable.cross_background);
-                        showWinDialog(0);
-                    } else if (storeActivePlayer == Player_0) {
-                        if (PICK_SIDE == 0) {
-                            playerTwoWinCount++;
-                            playerTwoWins.setText(String.valueOf(playerTwoWinCount));
-                        }
-                        if (PICK_SIDE == 1) {
-                            playerOneWinCount++;
-                            playerOneWins.setText(String.valueOf(playerOneWinCount));
-                        }
+                int winner = filledPos[val0 - 1]; // 0 = O, 1 = X
+                boolean humanWon;
 
-                        // Highlight winning boxes
-                        highlightWinningBoxes(val0, val1, val2, R.drawable.circle_background);
-                        showWinDialog(1);
+                // Log the winning condition
+                Log.d("WIN_CHECK", "Winning positions: " + val0 + ", " + val1 + ", " + val2);
+                Log.d("WIN_CHECK", "Winner value: " + winner);
+                if (winner == Player_X) {
+                    humanWon = (PICK_SIDE == 0); // Human is X
+                    if (humanWon) {
+                        playerOneWinCount++;
+                        playerOneWins.setText(String.valueOf(playerOneWinCount));
+                    } else {
+                        playerTwoWinCount++;
+                        playerTwoWins.setText(String.valueOf(playerTwoWinCount));
                     }
-                    isGameActive = false;
+                    highlightWinningBoxes(val0, val1, val2, R.drawable.cross_background);
+
+                } else { // winner == Player_0
+                    humanWon = (PICK_SIDE == 1); // Human is O
+                    if (humanWon) {
+                        playerOneWinCount++;
+                        playerOneWins.setText(String.valueOf(playerOneWinCount));
+                    } else {
+                        playerTwoWinCount++;
+                        playerTwoWins.setText(String.valueOf(playerTwoWinCount));
+                    }
+                    highlightWinningBoxes(val0, val1, val2, R.drawable.circle_background);
                 }
+
+              //  Pass winner + human/bot info
+                showWinDialog(humanWon, winner);
+
+                isGameActive = false;
+                break;
+
             }
         }
     }
+
+
+    private void showWinDialog(boolean isHumanWinner, int winnerSymbol) {
+        Handler handler = new Handler();
+        if (MyServices.SOUND_CHECK) {
+            final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+            mp.start();
+        }
+        handler.postDelayed(() -> {
+            if (isHumanWinner) {
+                celebrateDialog(winnerSymbol); // show correct symbol (X or O)
+            } else {
+                robotDialogfun(); // robot win
+            }
+        }, 750);
+    }
+
+
+
+
+    void checkdraw() {
+        boolean check = true;
+        for (int i = 0; i <= 8; i++) {
+            if (filledPos[i] == -1) {
+                check = false;
+            }
+        }
+        if (check) {
+            isGameActive = false;
+            if (MyServices.SOUND_CHECK) {
+                final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+                mp.start();
+            }
+            DrawDialogfun();
+        }
+    }
+
 
     private void highlightWinningBoxes(int val0, int val1, int val2, int backgroundResource) {
         if (val0 == 1 && val1 == 2 && val2 == 3) {
@@ -371,43 +513,11 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void showWinDialog(int player_check) {
-        Handler handler = new Handler();
-        if (MyServices.SOUND_CHECK) {
-            final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
-            mp.start();
-        }
-        handler.postDelayed(() -> {
-            if (player_check == 0) {
-                celebrateDialog(0);
-            } else if (player_check == 1) {
-                robotDialogfun();
-            }
-        }, 750);
-    }
-
-    void checkdraw() {
-        boolean check = true;
-        for (int i = 0; i <= 8; i++) {
-            if (filledPos[i] == -1) {
-                check = false;
-            }
-        }
-        if (check) {
-            isGameActive = false;
-            if (MyServices.SOUND_CHECK) {
-                final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
-                mp.start();
-            }
-            DrawDialogfun();
-        }
-    }
-
 private void celebrateDialog(int player_check) {
 
 
         dialog.setContentView(R.layout.celebrate_dialog);
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
 
 
@@ -417,42 +527,29 @@ private void celebrateDialog(int player_check) {
         Button continueBtn = dialog.findViewById(R.id.offline_game_continue_btn);
         ImageView playerImg = dialog.findViewById(R.id.offline_game_player_img);
 
-
-
-
-
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animationView.setVisibility(View.GONE);
-                linearLayout.setVisibility(View.VISIBLE);
-                if(player_check==0) {
-                    playerImg.setImageResource(R.drawable.cross);
-                } else  if(player_check==1) {
-                    playerImg.setImageResource(R.drawable.circle);
-                }
+        handler.postDelayed(() -> {
+            animationView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+            if(player_check==0) {
+                playerImg.setImageResource(R.drawable.xbg);
+            } else  if(player_check==1) {
+                playerImg.setImageResource(R.drawable.obg);
             }
         }, 2300);
 
 
 
-        quitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
-                startActivity(intent);
-            }
+        quitBtn.setOnClickListener(v -> {
+            dialog.dismiss();
+            Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
+            startActivity(intent);
         });
 
 
-        continueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                Restart();
-            }
+        continueBtn.setOnClickListener(v -> {
+            dialog.dismiss();
+            Restart();
         });
 
         dialog.show();
@@ -462,28 +559,22 @@ private void celebrateDialog(int player_check) {
 
 
         drawdialog.setContentView(R.layout.draw_dialog);
-        drawdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(drawdialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         drawdialog.setCanceledOnTouchOutside(false);
 
 
         Button quitBtn = drawdialog.findViewById(R.id.offline_game_draw_quit_btn);
         Button continueBtn = drawdialog.findViewById(R.id.offline_game_draw_continue_btn);
 
-        quitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawdialog.dismiss();
-                Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
-                startActivity(intent);
-            }
+        quitBtn.setOnClickListener(v -> {
+            drawdialog.dismiss();
+            Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
+            startActivity(intent);
         });
 
-        continueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawdialog.dismiss();
-                Restart();
-            }
+        continueBtn.setOnClickListener(v -> {
+            drawdialog.dismiss();
+            Restart();
         });
         drawdialog.show();
     }
@@ -494,28 +585,22 @@ private void celebrateDialog(int player_check) {
 
 
         robotdialog.setContentView(R.layout.robot_win_dialog);
-        robotdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(robotdialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         robotdialog.setCanceledOnTouchOutside(false);
 
 
         Button quitBtn = robotdialog.findViewById(R.id.offline_game_draw_quit_btn);
         Button continueBtn = robotdialog.findViewById(R.id.offline_game_draw_continue_btn);
 
-        quitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                robotdialog.dismiss();
-                Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
-                startActivity(intent);
-            }
+        quitBtn.setOnClickListener(v -> {
+            robotdialog.dismiss();
+            Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
+            startActivity(intent);
         });
 
-        continueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                robotdialog.dismiss();
-                Restart();
-            }
+        continueBtn.setOnClickListener(v -> {
+            robotdialog.dismiss();
+            Restart();
         });
         robotdialog.show();
     }
@@ -526,29 +611,29 @@ private void celebrateDialog(int player_check) {
 
 
         quitdialog.setContentView(R.layout.quit_dialog);
-        quitdialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(quitdialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         quitdialog.setCanceledOnTouchOutside(false);
 
 
         Button quitBtn = quitdialog.findViewById(R.id.quit_btn);
         Button continueBtn = quitdialog.findViewById(R.id.continue_btn);
 
-        quitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quitdialog.dismiss();
-                Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
-                startActivity(intent);
-            }
+        quitBtn.setOnClickListener(v -> {
+            quitdialog.dismiss();
+            Intent intent = new Intent(AiGameActivity.this, OfflineGameMenuActivity.class);
+            startActivity(intent);
+            finish();
         });
 
-        continueBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quitdialog.dismiss();
-            }
-        });
+        continueBtn.setOnClickListener(v -> quitdialog.dismiss());
         quitdialog.show();
+    }
+
+    @SuppressLint({"GestureBackNavigation", "MissingSuperCall"})
+    @Override
+    public void onBackPressed() {
+        // Instead of finishing the activity, show the quit confirmation dialog
+        quitDialogfun();
     }
 
 

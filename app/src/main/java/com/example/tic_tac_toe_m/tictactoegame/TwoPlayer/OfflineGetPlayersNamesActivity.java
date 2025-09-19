@@ -1,4 +1,4 @@
-package com.example.tic_tac_toe_m.tictactoegame;
+package com.example.tic_tac_toe_m.tictactoegame.TwoPlayer;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,7 +21,7 @@ public class OfflineGetPlayersNamesActivity extends AppCompatActivity implements
 
     private EditText playerOneName, playerTwoName;
     private Button playerOneButton, playerTwoButton;
-    private ImageView backBtn;
+   // private ImageView backBtn;
     private LinearLayout playerOneLayout, playerTwoLayout;
 
     private String playerOne, playerTwo;
@@ -30,16 +30,15 @@ public class OfflineGetPlayersNamesActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+// Make status bar transparent
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
 
-        // Enable fullscreen mode
-      /*  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getSupportActionBar().hide();
-*/
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         setContentView(R.layout.activity_offline_get_players_names);
 
         // Bind views
-        backBtn = findViewById(R.id.player_names_back_btn);
+  //      backBtn = findViewById(R.id.player_names_back_btn);
         playerOneName = findViewById(R.id.player_one_name_edttxt);
         playerTwoName = findViewById(R.id.player_two_name_edttxt);
         playerOneButton = findViewById(R.id.player_one_btn);
@@ -63,7 +62,7 @@ public class OfflineGetPlayersNamesActivity extends AppCompatActivity implements
         });
 
         // Back button
-        backBtn.setOnClickListener(v -> onBackPressed());
+    //    backBtn.setOnClickListener(v -> onBackPressed());
 
         // Second "Next" Button
         playerTwoButton.setOnTouchListener(this);

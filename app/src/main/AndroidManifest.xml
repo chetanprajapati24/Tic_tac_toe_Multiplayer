@@ -6,51 +6,77 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tictactoe">
-
-
-
-        <!-- Multiplayer Activities -->
-        <activity android:name=".tictactoegame.MultiplayerGameActivity" android:exported="false" />
-        <activity android:name=".tictactoegame.JoinRoomActivity" android:exported="false" />
-        <activity android:name=".tictactoegame.CreateRoomActivity" android:exported="false" />
-        <activity android:name=".tictactoegame.OnlineRoomActivity" android:exported="false" />
-
-        <!-- Settings Activity -->
-        <activity android:name=".tictactoegame.SettingsActivity" android:exported="true">
+        <activity
+            android:name=".tictactoegame.Multiplayer.Get_Player_Multiplayer_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.OnlineWithRoom.Get_PlayerName_RoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.Multiplayer.MatchGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.Multiplayer.MultiplayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.AI.AIDifficultyActivity"
+            android:exported="false" /> <!-- Multiplayer Activities -->
+        <activity
+            android:name=".tictactoegame.OnlineWithRoom.RoomplayerGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.OnlineWithRoom.JoinRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.OnlineWithRoom.CreateRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.OnlineWithRoom.OnlineRoomActivity"
+            android:exported="false" /> <!-- Settings Activity -->
+        <activity
+            android:name=".tictactoegame.Setting.SettingsActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SENDTO" />
+
                 <data android:scheme="mailto" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!-- AI Game Activities -->
-        <activity android:name=".tictactoegame.AiGameActivity" android:exported="true" />
-        <activity android:name=".tictactoegame.AiChooseSymbolActivity" android:exported="true" />
-        <activity android:name=".tictactoegame.AIGetPlayerNameActivity" android:exported="true" />
-
-        <!-- Offline Game Activities -->
-        <activity android:name=".tictactoegame.OfflineGameActivity" android:exported="true" />
-        <activity android:name=".tictactoegame.ChooseSymbolActivity" android:exported="true" />
-        <activity android:name=".tictactoegame.OfflineGetPlayersNamesActivity" android:exported="true" />
-
-        <!-- Launcher Activity (Use main app theme instead of AppCompat) -->
+        </activity> <!-- AI Game Activities -->
+        <activity
+            android:name=".tictactoegame.AI.AiGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.AI.AiChooseSymbolActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.AI.AIGetPlayerNameActivity"
+            android:exported="false" /> <!-- Offline Game Activities -->
+        <activity
+            android:name=".tictactoegame.TwoPlayer.OfflineGameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.TwoPlayer.ChooseSymbolActivity"
+            android:exported="false" />
+        <activity
+            android:name=".tictactoegame.TwoPlayer.OfflineGetPlayersNamesActivity"
+            android:exported="false" /> <!-- Launcher Activity (Use main app theme instead of AppCompat) -->
         <activity
             android:name=".tictactoegame.OfflineGameMenuActivity"
             android:exported="true"
             android:theme="@style/Base.Theme.Tictactoe">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
+
 </manifest>
