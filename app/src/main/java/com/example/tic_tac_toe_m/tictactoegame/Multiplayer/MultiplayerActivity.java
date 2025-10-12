@@ -3,9 +3,11 @@ package com.example.tic_tac_toe_m.tictactoegame.Multiplayer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +37,10 @@ public class MultiplayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         setContentView(R.layout.activity_multiplayer); // keep your existing lobby layout
 
         statusText = findViewById(R.id.status_text != 0 ? R.id.status_text : R.id.waiting_text);
@@ -50,6 +56,16 @@ public class MultiplayerActivity extends AppCompatActivity {
         }
 
         startSearch();
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
     }
 
     private void startSearch() {

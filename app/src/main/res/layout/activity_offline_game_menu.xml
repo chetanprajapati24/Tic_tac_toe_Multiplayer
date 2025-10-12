@@ -51,7 +51,7 @@
             android:layout_marginTop="48dp"
             android:scaleY="1"
             android:scaleX="1"
-            android:text="With AI" />
+            android:text="Play With AI" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choice2_offline_menu"
@@ -67,7 +67,7 @@
             android:layout_marginTop="20dp"
             android:scaleY="1"
             android:scaleX="1"
-            android:text="Online With a friend" />
+            android:text="Play In Room" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_choice4_online_menu"
@@ -75,7 +75,7 @@
             android:layout_marginTop="20dp"
             android:scaleY="1"
             android:scaleX="1"
-            android:text="Multiplayer" />
+            android:text="Online Multiplayer" />
 
         <!-- Settings Button -->
         <androidx.cardview.widget.CardView

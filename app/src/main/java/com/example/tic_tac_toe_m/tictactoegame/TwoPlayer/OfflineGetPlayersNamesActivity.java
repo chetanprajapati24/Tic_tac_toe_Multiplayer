@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tic_tac_toe_m.R;
@@ -78,6 +79,17 @@ public class OfflineGetPlayersNamesActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
+
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
     }
 
     // Button press alpha animation

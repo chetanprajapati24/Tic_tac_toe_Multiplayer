@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorCompat;
@@ -52,6 +53,17 @@ public class OnlineRoomActivity extends AppCompatActivity {
             intent.putExtra("Player_Name", playerName);
             startActivity(intent);
         });
+
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
     }
     private void animateButtons() {
         View[] views = {createRoomBtn, joinRoomBtn};

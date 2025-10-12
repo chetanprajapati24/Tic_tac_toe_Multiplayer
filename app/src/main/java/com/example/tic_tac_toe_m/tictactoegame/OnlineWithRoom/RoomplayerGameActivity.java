@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.tic_tac_toe_m.R;
 import com.example.tic_tac_toe_m.tictactoegame.AI.AiGameActivity;
 import com.example.tic_tac_toe_m.tictactoegame.OfflineGameMenuActivity;
+import com.example.tic_tac_toe_m.tictactoegame.Setting.SettingsActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +34,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
+
+import pl.droidsonroids.gif.GifImageView;
 
 public class RoomplayerGameActivity extends AppCompatActivity {
 
@@ -42,7 +48,7 @@ public class RoomplayerGameActivity extends AppCompatActivity {
     private final ImageView[] cells = new ImageView[9];
     private boolean isMyTurn = false;
     private String currentBoard = "---------";
-   // private GifImageView settingsGifView;
+    private GifImageView settingsGifView;
     private TextView timerTxtPlayerOne, timerTxtPlayerTwo;
     private TextView playerOneScoreTxt, playerTwoScoreTxt;
     private TextView nextRoundCountdown;
@@ -76,7 +82,7 @@ public class RoomplayerGameActivity extends AppCompatActivity {
         timerTxtPlayerTwo = findViewById(R.id.textViewTimer);
         playerOneScoreTxt = findViewById(R.id.player_one_win_count_txt);
         playerTwoScoreTxt = findViewById(R.id.player_two_won_txt);
-       // settingsGifView = findViewById(R.id.offline_game_seting_gifview);
+        settingsGifView = findViewById(R.id.room_game_seting_gifview);
         waitingLayout = findViewById(R.id.waiting_layout);
         nextRoundCountdown = findViewById(R.id.next_round_countdown);
         quitdialog = new Dialog(this);
@@ -96,17 +102,30 @@ public class RoomplayerGameActivity extends AppCompatActivity {
         celebrateDialog = new Dialog(this);
         drawDialog = new Dialog(this);
 
-       /* settingsGifView.setOnClickListener(v -> {
-            Drawable drawable1 = settingsGifView.getDrawable();
-            if (drawable1 instanceof Animatable) ((Animatable) drawable1).start();
+        settingsGifView.setOnClickListener(v -> {
+            startGif(settingsGifView);
             new Handler().postDelayed(() -> {
-                Drawable drawable2 = settingsGifView.getDrawable();
-                if (drawable2 instanceof Animatable) ((Animatable) drawable2).stop();
-                startActivity(new Intent(RoomplayerGameActivity.this, SettingsActivity.class));
+                stopGif(settingsGifView);
+                startActivity(new Intent(this, SettingsActivity.class));
             }, 750);
-        });*/
+        });
+
 
         setupFirebaseListeners();
+    }
+
+    private void startGif(GifImageView gifView) {
+        Drawable drawable = gifView.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).start();
+        }
+    }
+
+    private void stopGif(GifImageView gifView) {
+        Drawable drawable = gifView.getDrawable();
+        if (drawable instanceof Animatable) {
+            ((Animatable) drawable).stop();
+        }
     }
 
     private void setupFirebaseListeners() {
@@ -173,7 +192,6 @@ public class RoomplayerGameActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-        // Turn listener
         // Firebase listener for turn changes
         roomRef.child("turn").addValueEventListener(new ValueEventListener() {
             @Override
@@ -198,7 +216,6 @@ public class RoomplayerGameActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
         });
-
 
         // Ready flags for next round
         roomRef.addValueEventListener(new ValueEventListener() {
@@ -247,7 +264,6 @@ public class RoomplayerGameActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {}
         });
 
-
         // Status
         roomRef.child("status").addValueEventListener(new ValueEventListener() {
             @Override
@@ -263,6 +279,15 @@ public class RoomplayerGameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {}
+        });
+
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                quitDialogfun();
+            }
         });
 
     }

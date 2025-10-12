@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -44,6 +45,15 @@ public class JoinRoomActivity extends AppCompatActivity {
         }
 
         joinRoomBtn.setOnClickListener(v -> joinRoom());
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
     }
 
     private void joinRoom() {
@@ -84,5 +94,6 @@ public class JoinRoomActivity extends AppCompatActivity {
                 Toast.makeText(JoinRoomActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 }

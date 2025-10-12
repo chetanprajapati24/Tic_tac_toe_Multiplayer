@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -168,6 +169,15 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
                 startActivity(intent);
             }, 750);
         });
+        // Backpress handle
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                quitDialogfun();
+            }
+        });
+
 
     }
 

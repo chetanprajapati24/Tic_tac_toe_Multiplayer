@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tic_tac_toe_m.R;
@@ -41,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
         // Bind views
         vibrationSwitch = findViewById(R.id.vibration_switch);
         soundSwitch = findViewById(R.id.sound_switch);
-        rateUs = findViewById(R.id.rate_us_layout);
+       // rateUs = findViewById(R.id.rate_us_layout);
         feedback = findViewById(R.id.feedback_layout);
 
         // Initialize switch states
@@ -52,31 +53,38 @@ public class SettingsActivity extends AppCompatActivity {
         vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
                 MyServices.VIBRATION_CHECK = isChecked);
 
-        soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
-                MyServices.SOUND_CHECK = isChecked);
+        soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            MyServices.SOUND_CHECK = isChecked;
 
-      //  backBtn.setOnClickListener(v -> onBackPressed());
-
-        rateUs.setOnClickListener(v -> askRatings());
-
-        feedback.setOnClickListener(v -> composeEmail("Tic Tac Toe Feedback"));
-    }
-
-    private void askRatings() {
-        ReviewManager manager = ReviewManagerFactory.create(this);
-        Task<ReviewInfo> request = manager.requestReviewFlow();
-        request.addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                ReviewInfo reviewInfo = task.getResult();
-                Task<Void> flow = manager.launchReviewFlow(this, reviewInfo);
-                flow.addOnCompleteListener(task2 -> {
-                    // Review flow completed
-                });
+            if (!isChecked) {
+                // Stop background music immediately
+                MyServices.stopBackgroundMusic();
             } else {
-                // You can show a fallback message or ignore silently
+                // Optionally, start background music if needed
+                MyServices.startBackgroundMusic(this, R.raw.gotheme);
             }
         });
+
+
+
+        //  backBtn.setOnClickListener(v -> onBackPressed());
+
+     //   rateUs.setOnClickListener(v -> askRatings());
+
+        feedback.setOnClickListener(v -> composeEmail("Tic Tac Toe Feedback"));
+
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
     }
+
 
     private void composeEmail(String subject) {
         try {

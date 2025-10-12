@@ -141,35 +141,6 @@
         android:layout_weight="0.015"
         android:background="#777777" />
 
-    <!-- Rate Us -->
-    <LinearLayout
-        android:id="@+id/rate_us_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.85"
-        android:orientation="horizontal"
-        android:weightSum="10">
-
-        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.5" />
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="6dp"
-            android:src="@drawable/ic_rating" />
-        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="0.25" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:text="Rating"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:gravity="center_vertical"
-            android:fontFamily="@font/poppins_regular"
-            android:layout_gravity="center" />
-        <View android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="5.25" />
-    </LinearLayout>
 
     <!-- Divider -->
     <View

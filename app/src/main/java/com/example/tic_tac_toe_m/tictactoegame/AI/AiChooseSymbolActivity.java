@@ -8,13 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tic_tac_toe_m.R;
 
 public class AiChooseSymbolActivity extends AppCompatActivity implements View.OnTouchListener {
 
-    private ImageView backBtn, crossImg, crossRadioImg, circleImg, circleRadioImg;
+    private ImageView  crossImg, crossRadioImg, circleImg, circleRadioImg;
     private Button continueBtn;
 
     private int pickSide = 0; // Default: 0 for Cross
@@ -71,6 +72,16 @@ public class AiChooseSymbolActivity extends AppCompatActivity implements View.On
             intent.putExtra("ps", pickSide);
             startActivity(intent);
         });
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
     }
 
     @Override
@@ -81,7 +92,6 @@ public class AiChooseSymbolActivity extends AppCompatActivity implements View.On
         return false;
     }
 
-    @SuppressLint("GestureBackNavigation")
     @Override
     public void onBackPressed() {
         super.onBackPressed(); // Optional: Add custom behavior here if needed

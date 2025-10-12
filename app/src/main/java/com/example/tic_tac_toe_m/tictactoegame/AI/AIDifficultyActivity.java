@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tic_tac_toe_m.R;
@@ -29,6 +30,17 @@ public class AIDifficultyActivity extends AppCompatActivity {
         findViewById(R.id.btn_easy).setOnClickListener(v -> launchGame("Easy"));
         findViewById(R.id.btn_medium).setOnClickListener(v -> launchGame("Medium"));
         findViewById(R.id.btn_hard).setOnClickListener(v -> launchGame("Hard"));
+
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        });
+
     }
 
     private void launchGame(String level) {

@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -125,6 +126,17 @@ public class OfflineGameActivity extends AppCompatActivity {
 
         resetBoardOnly();
         startNewTurnTimer();
+
+        // Inside onCreate()
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Custom back behavior or just close activity
+                quitDialogFun();
+
+            }
+        });
+
 
     }
 
@@ -283,6 +295,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         });
 
         drawDialog.show();
+
     }
 
     // === Quit Dialog ===
