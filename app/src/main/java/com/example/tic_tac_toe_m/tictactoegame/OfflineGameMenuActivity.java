@@ -62,6 +62,7 @@ public class OfflineGameMenuActivity extends AppCompatActivity implements View.O
 
         getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
         setContentView(R.layout.activity_offline_game_menu);
+        MyServices.loadSettings(this);
         MyServices.startBackgroundMusic(this, R.raw.gotheme);
 
         // View Binding

@@ -2,12 +2,13 @@ package com.example.tic_tac_toe_m.tictactoegame.Setting;
 
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 
@@ -15,16 +16,17 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tic_tac_toe_m.R;
-import com.google.android.play.core.review.ReviewInfo;
-import com.google.android.play.core.review.ReviewManager;
-import com.google.android.play.core.review.ReviewManagerFactory;
-import com.google.android.play.core.tasks.Task;
 
 public class SettingsActivity extends AppCompatActivity {
 
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     private Switch vibrationSwitch, soundSwitch;
-    private LinearLayout rateUs, feedback;
+    private LinearLayout feedback;
+
+    private SharedPreferences preferences;
+    private static final String PREF_NAME = "TicTacToeSettings";
+    private static final String KEY_SOUND = "sound_enabled";
+    private static final String KEY_VIBRATION = "vibration_enabled";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +34,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Enable full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
-        }
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_settings);
@@ -42,49 +42,56 @@ public class SettingsActivity extends AppCompatActivity {
         // Bind views
         vibrationSwitch = findViewById(R.id.vibration_switch);
         soundSwitch = findViewById(R.id.sound_switch);
-       // rateUs = findViewById(R.id.rate_us_layout);
         feedback = findViewById(R.id.feedback_layout);
 
-        // Initialize switch states
-        vibrationSwitch.setChecked(MyServices.VIBRATION_CHECK);
-        soundSwitch.setChecked(MyServices.SOUND_CHECK);
+        // Initialize SharedPreferences
+        preferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 
-        // Set listeners
-        vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) ->
-                MyServices.VIBRATION_CHECK = isChecked);
+        // Load saved settings
+        boolean isSoundEnabled = preferences.getBoolean(KEY_SOUND, true);
+        boolean isVibrationEnabled = preferences.getBoolean(KEY_VIBRATION, true);
+
+        vibrationSwitch.setChecked(isVibrationEnabled);
+        soundSwitch.setChecked(isSoundEnabled);
+
+        // Update MyServices variables to match saved state
+        MyServices.VIBRATION_CHECK = isVibrationEnabled;
+        MyServices.SOUND_CHECK = isSoundEnabled;
+
+        // Handle switch changes
+        vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            MyServices.VIBRATION_CHECK = isChecked;
+            savePreference(KEY_VIBRATION, isChecked);
+        });
 
         soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             MyServices.SOUND_CHECK = isChecked;
+            savePreference(KEY_SOUND, isChecked);
 
             if (!isChecked) {
-                // Stop background music immediately
                 MyServices.stopBackgroundMusic();
             } else {
-                // Optionally, start background music if needed
                 MyServices.startBackgroundMusic(this, R.raw.gotheme);
             }
         });
 
-
-
-        //  backBtn.setOnClickListener(v -> onBackPressed());
-
-     //   rateUs.setOnClickListener(v -> askRatings());
-
         feedback.setOnClickListener(v -> composeEmail("Tic Tac Toe Feedback"));
 
-        // Inside onCreate()
+        // Handle back press
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Custom back behavior or just close activity
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
     }
 
+    private void savePreference(String key, boolean value) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
 
     private void composeEmail(String subject) {
         try {
@@ -95,7 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent, "Send feedback"));
             }
         } catch (ActivityNotFoundException e) {
-            // Fallback or toast if no email client is found
+            // Show a Toast or log if no email app is found
         }
     }
 
@@ -103,5 +110,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
