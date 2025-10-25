@@ -108,6 +108,8 @@ public class MatchGameActivity extends AppCompatActivity {
         waitingLayout = findViewById(R.id.waiting_layout);
         settingsGifView=findViewById(R.id.multiplyer_game_seting_gifview);
 
+        stopGif(settingsGifView);
+
         settingsGifView.setOnClickListener(v -> {
             startGif(settingsGifView);
             new Handler().postDelayed(() -> {

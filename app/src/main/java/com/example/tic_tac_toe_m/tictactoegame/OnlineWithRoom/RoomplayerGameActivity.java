@@ -87,6 +87,16 @@ public class RoomplayerGameActivity extends AppCompatActivity {
         nextRoundCountdown = findViewById(R.id.next_round_countdown);
         quitdialog = new Dialog(this);
 
+        stopGif(settingsGifView);
+
+        settingsGifView.setOnClickListener(v -> {
+            startGif(settingsGifView);
+            new Handler().postDelayed(() -> {
+                stopGif(settingsGifView);
+                startActivity(new Intent(this, SettingsActivity.class));
+            }, 750);
+        });
+
 
 
        // Drawable drawable = settingsGifView.getDrawable();
