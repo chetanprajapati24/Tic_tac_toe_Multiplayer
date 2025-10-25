@@ -64,7 +64,7 @@ public class ChooseSymbolActivity extends AppCompatActivity implements View.OnTo
             if (pickSide == -1) {
                 pickSide=0;
                 selectCross();
-                Toast.makeText(this, " X symbol selected X chosen!", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this, " X symbol selected X chosen!", Toast.LENGTH_SHORT).show();
             }
 
             Intent intent = new Intent(ChooseSymbolActivity.this, OfflineGameActivity.class);
