@@ -523,6 +523,10 @@ public class MatchGameActivity extends AppCompatActivity {
             animationView.setVisibility(View.GONE);
             container.setVisibility(View.VISIBLE);
             winnerImg.setImageResource(winner.equals("X") ? R.drawable.xbg : R.drawable.obg);
+            TextView winnerNameTxt = celebrateDialog.findViewById(R.id.playerNameSet);
+            String winnerName = winner.equals("X") ? playerOneNameTxt.getText().toString()
+                    : playerTwoNameTxt.getText().toString();
+            winnerNameTxt.setText(winnerName + " Wins!");
         }, 2000);
 
         quitBtn.setOnClickListener(v -> {
