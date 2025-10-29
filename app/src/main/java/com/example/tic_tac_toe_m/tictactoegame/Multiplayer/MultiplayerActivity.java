@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,22 +17,21 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import com.google.firebase.database.ValueEventListener;
 
 public class MultiplayerActivity extends AppCompatActivity {
 
-    private static final long WAIT_TIMEOUT_MS = 30000; // 30s wait before cancel
+    private static final long WAIT_TIMEOUT_MS = 30000; // 30s wait
 
     private DatabaseReference lobbyRef;
     private DatabaseReference gamesRef;
     private String playerId;
     private String playerName;
     private TextView statusText;
+    private Button continueBtn;
 
     private Handler timeoutHandler = new Handler();
     private Runnable timeoutRunnable;
-
     private ValueEventListener lobbyListener;
 
     @Override
@@ -39,89 +39,80 @@ public class MultiplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-
         getWindow().setStatusBarColor(android.graphics.Color.TRANSPARENT);
-        setContentView(R.layout.activity_multiplayer); // keep your existing lobby layout
+        setContentView(R.layout.activity_multiplayer);
 
-        statusText = findViewById(R.id.status_text != 0 ? R.id.status_text : R.id.waiting_text);
-        // try both common ids in case layout differs
+        statusText = findViewById(R.id.status_text);
+        continueBtn = findViewById(R.id.btn_continue_search);
 
         lobbyRef = FirebaseDatabase.getInstance().getReference("lobby");
         gamesRef = FirebaseDatabase.getInstance().getReference("games");
 
-        playerId = String.valueOf(System.currentTimeMillis()); // simple id
+        playerId = String.valueOf(System.currentTimeMillis());
         playerName = getIntent().getStringExtra(MyConstants.playerName);
         if (playerName == null || playerName.trim().isEmpty()) {
-            playerName = "Player" + (int)(Math.random() * 1000);
+            playerName = "Player" + (int) (Math.random() * 1000);
         }
 
         startSearch();
-        // Inside onCreate()
+
+        continueBtn.setOnClickListener(v -> {
+            continueBtn.setVisibility(View.GONE);
+            startSearch(); // reinitiate search
+        });
+
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Custom back behavior or just close activity
                 finish();
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         });
-
     }
 
     private void startSearch() {
         statusText.setText("Searching for opponent...");
-        // Try to pair immediately
+        lobbyRef.child(playerId).removeValue(); // ensure clean start
+
         lobbyRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.hasChildren()) {
-                    // take first waiting player
                     DataSnapshot waiting = snapshot.getChildren().iterator().next();
                     String opponentId = waiting.getKey();
                     String opponentName = waiting.getValue(String.class);
 
-                    // create new game
                     String gameId = gamesRef.push().getKey();
                     if (gameId == null) {
                         Toast.makeText(MultiplayerActivity.this, "Unable to create game. Try again.", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    // write both players to game node
                     gamesRef.child(gameId).child("players").child(playerId).setValue(playerName);
                     gamesRef.child(gameId).child("players").child(opponentId).setValue(opponentName);
 
-                    // init board
                     for (int i = 0; i < 9; i++) {
                         gamesRef.child(gameId).child("board").child(String.valueOf(i)).setValue("");
                     }
                     gamesRef.child(gameId).child("turn").setValue("X");
                     gamesRef.child(gameId).child("turnStartTime").setValue(System.currentTimeMillis());
-
-                    // remove opponent from lobby
                     lobbyRef.child(opponentId).removeValue();
 
                     launchMatch(gameId);
                 } else {
-                    // no one waiting — put self in lobby and wait
                     lobbyRef.child(playerId).setValue(playerName);
                     statusText.setText("Waiting for opponent...");
 
-                    // set up timeout
                     timeoutRunnable = () -> {
-                        // timeout reached -> remove from lobby and stop
                         lobbyRef.child(playerId).removeValue();
-                        Toast.makeText(MultiplayerActivity.this, "No opponent found. Try again later.", Toast.LENGTH_SHORT).show();
-                        finish(); // go back to previous screen
+                        statusText.setText("No opponent found.");
+                        continueBtn.setVisibility(View.VISIBLE);
                     };
                     timeoutHandler.postDelayed(timeoutRunnable, WAIT_TIMEOUT_MS);
 
-                    // listen for being removed from lobby (which indicates pairing happened)
                     lobbyListener = new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snap) {
                             if (!snap.exists()) {
-                                // removed from lobby — find the game that contains this player
-                                // Search games where this player exists
                                 gamesRef.orderByChild("players/" + playerId).equalTo(playerName)
                                         .addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -129,19 +120,18 @@ public class MultiplayerActivity extends AppCompatActivity {
                                                 for (DataSnapshot g : gamesSnap.getChildren()) {
                                                     String gameId = g.getKey();
                                                     if (gameId != null) {
-                                                        // cancel timeout and listener, then launch
                                                         timeoutHandler.removeCallbacks(timeoutRunnable);
                                                         launchMatch(gameId);
+                                                        break;
                                                     }
-                                                    break;
                                                 }
                                             }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {}
+                                            @Override public void onCancelled(@NonNull DatabaseError error) {}
                                         });
                             }
                         }
+
                         @Override public void onCancelled(@NonNull DatabaseError error) {}
                     };
                     lobbyRef.child(playerId).addValueEventListener(lobbyListener);
@@ -161,7 +151,6 @@ public class MultiplayerActivity extends AppCompatActivity {
         intent.putExtra("playerId", playerId);
         intent.putExtra("playerName", playerName);
         startActivity(intent);
-        // cleanup: remove any lobby listener and callbacks
         if (lobbyListener != null) lobbyRef.child(playerId).removeEventListener(lobbyListener);
         timeoutHandler.removeCallbacksAndMessages(null);
         finish();
@@ -170,7 +159,6 @@ public class MultiplayerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // ensure removal from lobby if we leave early
         lobbyRef.child(playerId).removeValue();
         timeoutHandler.removeCallbacksAndMessages(null);
         if (lobbyListener != null) lobbyRef.child(playerId).removeEventListener(lobbyListener);

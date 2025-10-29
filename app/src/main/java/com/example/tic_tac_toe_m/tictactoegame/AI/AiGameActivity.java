@@ -195,7 +195,7 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             // Vibrate when Player X moves
-            MyServices.vibrate(this, 500);
+           // MyServices.vibrate(this, 500);
 
             clickImg.setImageResource(R.drawable.xbg);
             storeActivePlayer = ActivePlayer;
@@ -215,7 +215,7 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             //  Vibrate when Player O moves
-            MyServices.vibrate(this, 500);
+          //  MyServices.vibrate(this, 500);
 
             clickImg.setImageResource(R.drawable.obg);
             storeActivePlayer = ActivePlayer;
@@ -394,8 +394,6 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
         return bestMove.row * 3 + bestMove.col;
     }
 
-
-
     private void checkForWin() {
         int[][] winningPos = {
                 {1, 2, 3}, {4, 5, 6}, {7, 8, 9},
@@ -450,7 +448,6 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
     private void showWinDialog(boolean isHumanWinner, int winnerSymbol) {
         Handler handler = new Handler();
         if (MyServices.SOUND_CHECK) {
@@ -465,9 +462,6 @@ public class AiGameActivity extends AppCompatActivity implements View.OnClickLis
             }
         }, 750);
     }
-
-
-
 
     void checkdraw() {
         boolean check = true;
@@ -536,6 +530,7 @@ private void celebrateDialog(int player_check) {
         Button quitBtn = dialog.findViewById(R.id.offline_game_quit_btn);
         Button continueBtn = dialog.findViewById(R.id.offline_game_continue_btn);
         ImageView playerImg = dialog.findViewById(R.id.offline_game_player_img);
+    MyServices.vibrate(this, 500);
 
         Handler handler = new Handler();
         handler.postDelayed(() -> {
@@ -589,8 +584,6 @@ private void celebrateDialog(int player_check) {
         drawdialog.show();
     }
 
-
-
     private void    robotDialogfun() {
 
 
@@ -598,7 +591,7 @@ private void celebrateDialog(int player_check) {
         Objects.requireNonNull(robotdialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         robotdialog.setCanceledOnTouchOutside(false);
 
-
+        MyServices.vibrate(this, 500);
         Button quitBtn = robotdialog.findViewById(R.id.offline_game_draw_quit_btn);
         Button continueBtn = robotdialog.findViewById(R.id.offline_game_draw_continue_btn);
 
@@ -614,8 +607,6 @@ private void celebrateDialog(int player_check) {
         });
         robotdialog.show();
     }
-
-
 
     private void    quitDialogfun() {
 

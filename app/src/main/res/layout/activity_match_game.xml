@@ -15,6 +15,7 @@
         android:textSize="64sp"
         android:textColor="@android:color/holo_red_dark"
         android:layout_gravity="center"
+        android:layout_marginTop="15dp"
         android:visibility="gone"/>
 
 

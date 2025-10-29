@@ -175,7 +175,7 @@ public class OfflineGameActivity extends AppCompatActivity {
             mp.start();
         }
 
-        MyServices.vibrate(this, 200);  // 200ms vibration
+      //  MyServices.vibrate(this, 200);  // 200ms vibration
 
         if (checkWinner()) {
             if (playerOneTurn) {
@@ -245,6 +245,7 @@ public class OfflineGameActivity extends AppCompatActivity {
         ImageView winnerImg = celebrateDialog.findViewById(R.id.offline_game_player_img);
         Button quitBtn = celebrateDialog.findViewById(R.id.offline_game_quit_btn);
         Button continueBtn = celebrateDialog.findViewById(R.id.offline_game_continue_btn);
+        MyServices.vibrate(this, 500);
 
         new Handler().postDelayed(() -> {
             animationView.setVisibility(View.GONE);

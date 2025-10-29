@@ -26,6 +26,7 @@ import com.airbnb.lottie.LottieAnimationView;
 import com.example.tic_tac_toe_m.R;
 import com.example.tic_tac_toe_m.tictactoegame.AI.AiGameActivity;
 import com.example.tic_tac_toe_m.tictactoegame.OfflineGameMenuActivity;
+import com.example.tic_tac_toe_m.tictactoegame.Setting.MyServices;
 import com.example.tic_tac_toe_m.tictactoegame.Setting.SettingsActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -388,6 +389,7 @@ public class RoomplayerGameActivity extends AppCompatActivity {
         ImageView winnerImg = celebrateDialog.findViewById(R.id.offline_game_player_img);
         Button quitBtn = celebrateDialog.findViewById(R.id.offline_game_quit_btn);
         Button continueBtn = celebrateDialog.findViewById(R.id.offline_game_continue_btn);
+        MyServices.vibrate(this, 500);
 
         new Handler().postDelayed(() -> {
             animationView.setVisibility(View.GONE);

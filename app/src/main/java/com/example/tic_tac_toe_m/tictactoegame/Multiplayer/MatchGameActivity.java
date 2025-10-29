@@ -421,7 +421,7 @@ public class MatchGameActivity extends AppCompatActivity {
                         mp.setOnCompletionListener(MediaPlayer::release);
                         mp.start();
                     }
-                    MyServices.vibrate(this, 200);
+                 //   MyServices.vibrate(this, 200);
                 }
                 cells[i].setEnabled(false);
             } else if (cell == 'O') {
@@ -432,7 +432,7 @@ public class MatchGameActivity extends AppCompatActivity {
                         mp.setOnCompletionListener(MediaPlayer::release);
                         mp.start();
                     }
-                    MyServices.vibrate(this, 200);
+                 //   MyServices.vibrate(this, 200);
                 }
                 cells[i].setEnabled(false);
             } else {
@@ -518,6 +518,7 @@ public class MatchGameActivity extends AppCompatActivity {
         ImageView winnerImg = celebrateDialog.findViewById(R.id.offline_game_player_img);
         Button quitBtn = celebrateDialog.findViewById(R.id.offline_game_quit_btn);
         Button continueBtn = celebrateDialog.findViewById(R.id.offline_game_continue_btn);
+        MyServices.vibrate(this, 500);
 
         new Handler().postDelayed(() -> {
             animationView.setVisibility(View.GONE);
